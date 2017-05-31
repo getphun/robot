@@ -1,0 +1,51 @@
+<?= '<?xml version="1.0" ?>' ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+    <atom:link href="<?= $feed->url ?>" rel="self" type="application/rss+xml" />
+    <copyright>Copyright <?= date('Y') ?>, <?= $this->config->name ?></copyright>
+    <description><?= $feed->description ?></description>
+    <generator>Phun</generator>
+    <language>id-id</language>
+    
+    <lastBuildDate><?= $feed->updated ?></lastBuildDate>
+    
+    <link><?= $feed->host ?></link>
+    <pubDate><?= $feed->updated ?></pubDate>
+    <title><?= $feed->title ?></title>
+    
+    <image>
+        <url><?= $this->asset('logo.png'); ?></url>
+        <link><?= $feed->host ?></link>
+        <title><?= $feed->title ?></title>
+        <description><?= $feed->description ?></description>
+    </image>
+    
+    <?php if($pages): ?>
+        <?php foreach($pages as $page): ?>
+        <item>
+            <atom:link href="<?= $feed->url ?>" rel="self" type="application/rss+xml" />
+            <?php if(isset($page->author)): ?>
+                <author><?= $page->author ?></author>
+            <?php endif; ?>
+            <?php if(isset($page->categories)): ?>
+                <?php foreach($page->categories as $cat): ?>
+                    <category><?= $cat ?></category>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <?php if(isset($page->comment)): ?>
+                <comments><?= $page->comment ?></comments>
+            <?php endif; ?>
+            <description><?= $page->description ?></description>
+            <guid><?= $page->page ?></guid>
+            <link><?= $page->page ?></link>
+            <pubDate><?= $page->published ?></pubDate>
+            <?php if(isset($page->updated)): ?>
+            <updated><?= hs($page->updated) ?></updated>
+            <?php endif; ?>
+            <title><?= hs($page->title) ?></title>
+        </item>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    
+</channel>
+</rss>
