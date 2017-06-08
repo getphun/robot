@@ -45,17 +45,21 @@ class MainController extends \SiteController
         
         $feed_router = $type === 'xml' ? 'robotFeedXML' : 'robotFeedJSON';
         
+        $config_name = hs($dis->config->name);
+        
         $feed = (object)[
             'url'         => $dis->router->to($feed_router),
-            'description' => $dis->config->name . ' RSS Feed',
+            'description' => $config_name . ' RSS Feed',
             'updated'     => null,
             'host'        => $dis->router->to('siteHome'),
-            'title'       => $dis->config->name
+            'title'       => $config_name
         ];
         
         if(module_exists('site-param')){
-            $feed->description = $dis->setting->frontpage_description ?? $feed->description;
-            $feed->title = $dis->setting->frontpage_title ?? $feed->title;
+            if($dis->setting->frontpage_description)
+                $feed->description = hs($dis->setting->frontpage_description);
+            if($dis->setting->frontpage_title)
+                $feed->title = hs($dis->setting->frontpage_title);
         }
         
         $this->robot->feed($feed, $pages, $type);
