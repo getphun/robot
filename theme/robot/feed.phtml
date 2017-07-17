@@ -1,5 +1,5 @@
 <?= '<?xml version="1.0" ?>' ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
     <atom:link href="<?= $feed->url ?>" rel="self" type="application/rss+xml" />
     <copyright>Copyright <?= date('Y') ?>, <?= $this->config->name ?></copyright>
@@ -25,7 +25,7 @@
         <item>
             <atom:link href="<?= $feed->url ?>" rel="self" type="application/rss+xml" />
             <?php if(isset($page->author)): ?>
-                <author><?= $page->author ?></author>
+                 <dc:creator><?= $page->author ?></dc:creator>
             <?php endif; ?>
             <?php if(isset($page->categories)): ?>
                 <?php foreach($page->categories as $cat): ?>
@@ -39,9 +39,6 @@
             <guid><?= $page->page ?></guid>
             <link><?= $page->page ?></link>
             <pubDate><?= $page->published ?></pubDate>
-            <?php if(isset($page->updated)): ?>
-            <updated><?= hs($page->updated) ?></updated>
-            <?php endif; ?>
             <title><?= hs($page->title) ?></title>
         </item>
         <?php endforeach; ?>

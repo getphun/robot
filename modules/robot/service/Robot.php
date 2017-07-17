@@ -50,7 +50,7 @@ class Robot {
         $dis = \Phun::$dispatcher;
         
         if(!$feed->updated)
-            $feed->updated = date('c', $last_update);
+            $feed->updated = date('r', $last_update);
         
         if($type === 'xml'){
             $dis->res->addHeader('Content-Type', 'application/xml; charset=UTF-8');
