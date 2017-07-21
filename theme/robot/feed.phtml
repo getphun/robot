@@ -35,11 +35,11 @@
             <?php if(isset($page->comment)): ?>
                 <comments><?= $page->comment ?></comments>
             <?php endif; ?>
-            <description><?= $page->description ?></description>
+            <description><![CDATA[<?= $page->description ?>]]></description>
             <guid><?= $page->page ?></guid>
             <link><?= $page->page ?></link>
             <pubDate><?= $page->published ?></pubDate>
-            <title><?= hs($page->title) ?></title>
+            <title><?= $page->title ?></title>
         </item>
         <?php endforeach; ?>
     <?php endif; ?>
