@@ -31,21 +31,13 @@ return [
     ],
     '_routes' => [
         'site' => [
-            'robotSitemapXML' => [
+            'robotSitemap' => [
                 'rule' => '/sitemap.xml',
-                'handler' => 'Robot\\Controller\\Main::sitemapXml'
+                'handler' => 'Robot\\Controller\\Main::sitemap'
             ],
-            'robotSitemapJSON' => [
-                'rule' => '/sitemap.json',
-                'handler' => 'Robot\\Controller\\Main::sitemapJson'
-            ],
-            'robotFeedXML' => [
+            'robotFeed' => [
                 'rule' => '/feed.xml',
-                'handler' => 'Robot\\Controller\\Main::feedXml'
-            ],
-            'robotFeedJSON' => [
-                'rule' => '/feed.json',
-                'handler' => 'Robot\\Controller\\Main::feedJson'
+                'handler' => 'Robot\\Controller\\Main::feed'
             ]
         ]
     ],

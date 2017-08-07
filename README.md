@@ -3,8 +3,7 @@
 Adalah service yang menggenerasi rss feed dan sitemap. Masing-masing modul bisa 
 menggenerasi rss feed/sitemap masing-masing dengan perintah `$this->robot->sitemap`
 atau `$this->robot->feed`. Modul ini juga menyediakan global sitemap/rss feed yang
-bisa diakses dari `/sitemap.xml`, `/sitemap.json`, `/feed.xml`, dan `/feed.json`.
-Opsi respond dengan json hanya ada jika opsi `robot->json` adalah `true`.
+bisa diakses dari `/sitemap.xml`, dan `/feed.xml`.
 
 Sumber data global sitemap/rss feed diambil dari handler yang didaftarkan pada
 konfigurasi aplikasi. Contoh di bawah adalah contoh sederhana konfigurasi modul
@@ -17,7 +16,6 @@ return [
     'name' => 'Phun',
     ...,
     'robot' => [
-        'json'  => true,
         'cache' => 86400,
         'sitemap' => [
             'module'  => 'Module\\Library\\Robot::sitemap',
@@ -30,9 +28,6 @@ return [
     ]
 ];
 ```
-
-Konfigurasi `json` digunakan untuk menentukan apakah system akan melayani request
-ke `/sitemap.json` dan `/feed.json` atau tidak.
 
 Opsi `cache` digunakan untuk menentukan lamanya global sitemap/feed di cache. Aplikasi
 harus menghapus cache ini secara manual jika ingin menghilangkannya sebelum masa

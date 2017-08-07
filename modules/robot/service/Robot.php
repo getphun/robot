@@ -10,7 +10,7 @@ namespace Robot\Service;
 
 class Robot {
     
-    public function sitemap($pages, $type='xml'){
+    public function sitemap($pages){
         $last_update = 0;
         $has_image = false;
         foreach($pages as $page){
@@ -23,13 +23,8 @@ class Robot {
         
         $dis = \Phun::$dispatcher;
         
-        if($type == 'xml'){
-            $dis->res->addHeader('Content-Type', 'application/xml; charset=UTF-8');
-            $dis->res->render('robot', 'sitemap', ['pages'=>$pages, 'has_image'=>$has_image]);
-        }elseif($type == 'json'){
-            $dis->res->addContent(json_encode($pages));
-            $dis->res->addHeader('Content-Type', 'application/json; charset=UTF-8');
-        }
+        $dis->res->addHeader('Content-Type', 'application/xml; charset=UTF-8');
+        $dis->res->render('robot', 'sitemap', ['pages'=>$pages, 'has_image'=>$has_image]);
         
         $cache = $dis->config->robot['cache'];
         if($cache)
@@ -39,7 +34,7 @@ class Robot {
         $dis->res->send();
     }
     
-    public function feed($feed, $pages, $type='xml'){
+    public function feed($feed, $pages){
         $last_update = 0;
         foreach($pages as $page){
             $updated = strtotime($page->updated);
@@ -52,13 +47,8 @@ class Robot {
         if(!$feed->updated)
             $feed->updated = date('r', $last_update);
         
-        if($type === 'xml'){
-            $dis->res->addHeader('Content-Type', 'application/xml; charset=UTF-8');
-            $dis->res->render('robot', 'feed', ['pages'=>$pages, 'feed'=>$feed]);
-        }elseif($type === 'json'){
-            $dis->res->addContent(json_encode($pages));
-            $dis->res->addHeader('Content-Type', 'application/json; charset=UTF-8');
-        }
+        $dis->res->addHeader('Content-Type', 'application/xml; charset=UTF-8');
+        $dis->res->render('robot', 'feed', ['pages'=>$pages, 'feed'=>$feed]);
         
         $cache = $dis->config->robot['cache'];
         if($cache)

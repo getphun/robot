@@ -10,24 +10,8 @@ namespace Robot\Controller;
 
 class MainController extends \SiteController
 {
-    private function sitemap($type='xml'){
-        $handlers = $this->config->robot['sitemap'] ?? [];
-        $pages = [];
-        
-        foreach($handlers as $module => $handler){
-            $hans   = explode('::', $handler);
-            $class  = $hans[0];
-            $method = $hans[1];
-            
-            $hand_class = $class::$method();
-            if($hand_class)
-                $pages = array_merge($pages, $hand_class);
-        }
-        
-        $this->robot->sitemap($pages, $type);
-    }
-    
-    private function feed($type='xml'){
+
+    public function feedAction(){
         $handlers = $this->config->robot['feed'] ?? [];
         $pages = [];
         
@@ -43,12 +27,10 @@ class MainController extends \SiteController
         
         $dis = &\Phun::$dispatcher;
         
-        $feed_router = $type === 'xml' ? 'robotFeedXML' : 'robotFeedJSON';
-        
         $config_name = hs($dis->config->name);
         
         $feed = (object)[
-            'url'         => $dis->router->to($feed_router),
+            'url'         => $dis->router->to('robotFeed'),
             'description' => $config_name . ' RSS Feed',
             'updated'     => null,
             'host'        => $dis->router->to('siteHome'),
@@ -62,26 +44,23 @@ class MainController extends \SiteController
                 $feed->title = hs($dis->setting->frontpage_title);
         }
         
-        $this->robot->feed($feed, $pages, $type);
+        $this->robot->feed($feed, $pages);
     }
     
-    public function feedJsonAction(){
-        if(!$this->config->robot['json'])
-            return $this->show404();
-        $this->feed('json');
-    }
-    
-    public function feedXmlAction(){
-        $this->feed();
-    }
-    
-    public function sitemapJsonAction(){
-        if(!$this->config->robot['json'])
-            return $this->show404();
-        $this->sitemap('json');
-    }
-    
-    public function sitemapXmlAction(){
-        $this->sitemap();
+    public function sitemapAction(){
+        $handlers = $this->config->robot['sitemap'] ?? [];
+        $pages = [];
+        
+        foreach($handlers as $module => $handler){
+            $hans   = explode('::', $handler);
+            $class  = $hans[0];
+            $method = $hans[1];
+            
+            $hand_class = $class::$method();
+            if($hand_class)
+                $pages = array_merge($pages, $hand_class);
+        }
+        
+        $this->robot->sitemap($pages);
     }
 }
