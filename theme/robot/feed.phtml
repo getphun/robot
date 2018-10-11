@@ -25,11 +25,11 @@
         <item>
             <atom:link href="<?= $feed->url ?>" rel="self" type="application/rss+xml" />
             <?php if(isset($page->author)): ?>
-                 <dc:creator><?= $page->author ?></dc:creator>
+                 <dc:creator><![CDATA[<?= $page->author ?>]]></dc:creator>
             <?php endif; ?>
             <?php if(isset($page->categories)): ?>
                 <?php foreach($page->categories as $cat): ?>
-                    <category><?= $cat ?></category>
+                    <category><![CDATA[<?= $cat ?>]]></category>
                 <?php endforeach; ?>
             <?php endif; ?>
             <?php if(isset($page->comment)): ?>
